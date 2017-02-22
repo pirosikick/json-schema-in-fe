@@ -1,0 +1,108 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: User
+description: ユーザ情報
+stability: prototype
+strictProperties: true
+type:
+- object
+definitions:
+  id:
+    description: 一意なユーザID
+    readOnly: true
+    format: uuid
+    type:
+    - string
+  name:
+    description: 一意なユーザ名
+    readOnly: true
+    type:
+    - string
+  identity:
+    anyOf:
+    - "$ref": "/schemata/user#/definitions/id"
+    - "$ref": "/schemata/user#/definitions/name"
+  email:
+    description: メールアドレス
+    readOnly: true
+    format: email
+    type:
+    - string
+  twitter:
+    description: TwitterのURL
+    readOnly: true
+    format: url
+    type:
+    - string
+  created_at:
+    description: 登録日時
+    format: date-time
+    type:
+    - string
+  updated_at:
+    description: 更新日時
+    format: date-time
+    type:
+    - string
+links:
+- description: ユーザの登録
+  href: "/users"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      name:
+        $ref: "/schemata/user#/definitions/name"
+      email:
+        $ref: "/schemata/user#/definitions/email"
+      twitter:
+        $ref: "/schemata/user#/definitions/twitter"
+    type:
+    - object
+  required:
+  - name
+  - email
+  - twitter
+  title: ユーザ登録
+- description: ユーザの削除
+  href: "/users/{(%2Fschemata%2Fuser%23%2Fdefinitions%2Fidentity)}"
+  method: DELETE
+  rel: destroy
+  title: Delete
+- description: ユーザ削除
+  href: "/users/{(%2Fschemata%2Fuser%23%2Fdefinitions%2Fidentity)}"
+  method: GET
+  rel: self
+  title: Info
+- description: ユーザの一覧
+  href: "/users"
+  method: GET
+  rel: instances
+  title: ユーザ一覧
+- description: ユーザ情報の更新
+  href: "/users/{(%2Fschemata%2Fuser%23%2Fdefinitions%2Fidentity)}"
+  method: PATCH
+  rel: update
+  schema:
+    properties:
+      email:
+        $ref: "/schemata/user#/definitions/email"
+      twitter:
+        $ref: "/schemata/user#/definitions/twitter"
+    type:
+    - object
+  title: Update
+properties:
+  id:
+    "$ref": "/schemata/user#/definitions/id"
+  name:
+    "$ref": "/schemata/user#/definitions/name"
+  email:
+    "$ref": "/schemata/user#/definitions/email"
+  twitter:
+    "$ref": "/schemata/user#/definitions/twitter"
+  created_at:
+    "$ref": "/schemata/user#/definitions/created_at"
+  updated_at:
+    "$ref": "/schemata/user#/definitions/updated_at"
+id: schemata/user
